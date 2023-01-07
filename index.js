@@ -1,16 +1,30 @@
 const express = require("express");
-const moongoose = require("mongoose");
+const mongoose = require("mongoose");
 
 const app = express();
-const port = 3003;
+const port = 5000;
+
+app.get("/", function(req, res) {
+	res.send("MongoDB here")
+})
+
+app.use(express.json({ extended: true }));
+
+app.use("/api/auth", require("./routes/auth.route"));
 
 async function start() {
     try {
-        await moongoose.connect(
-            "mongodb+srv://admin:admin@mern-todo-app.zyux4yn.mongodb.net/?retryWrites=true&w=majority"
+        await mongoose.connect(
+            "mongodb+srv://vladimir:uA9-K9g-pFB-4LG@mern-todo-app.zyux4yn.mongodb.net/?retryWrites=true&w=majority",
+			{
+				useNewUrlParser: true,
+				useUnifiedTopology: true,
+				useCreateIndex: true,
+				useFindAndModifyIndexOptions: true,
+			}
         );
-    } catch (error) {
-        console.error(error);
+    } catch (err) {
+        console.error(err);
     }
 
     app.listen(port, () => {
