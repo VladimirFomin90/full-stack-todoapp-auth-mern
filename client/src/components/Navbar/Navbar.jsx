@@ -1,16 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Navbar.scss";
 
 export default function Navbar() {
     return (
         <nav>
             <div className="nav-wrapper navbar teal darken-4">
-                <a href="/" className="brand-logo">
+                <Link href="/" className="brand-logo">
                     mern Todo App
-                </a>
+                </Link>
                 <ul id="nav-mobile" className="right hide-on-med-and-down">
                     <li>
-                        <a href="sass.html">Войти</a>
+                        <Link href="sass.html">Войти</Link>
                     </li>
                 </ul>
             </div>

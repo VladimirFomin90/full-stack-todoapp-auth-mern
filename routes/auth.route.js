@@ -49,7 +49,7 @@ router.post(
     "/login",
     [
         check("email", "Некорректный email").isEmail(),
-        check("password", "Некорректный пароль").exists(),
+        check("password", "Введите пароль").exists(),
     ],
     async (req, res) => {
         try {
@@ -58,7 +58,7 @@ router.post(
                 return res.status(400).json({
                     errors: validRequest.array(),
                     message:
-                        "Некорректные данные при регистрации, минимум 5 символов в пароле",
+                        "Некорректные данные при входе в систему",
                 });
             }
 
@@ -77,9 +77,9 @@ router.post(
 
 			}
 
-			const jwtSecretKey = "cyjdsvujljv2023"
+			const jwtSecretKey = "cyjdsvujljv2023";
 
-			const token = jwt.sign({userId: user.id}, {jwtSecretKey}, {expiresIn: "1h"})
+			const token = jwt.sign({userId: user.id}, jwtSecretKey, {expiresIn: "1h"})
 
 			res.json({token, userId: user.id})
 

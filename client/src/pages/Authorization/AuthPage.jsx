@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "./AuthPage.scss";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import axios from "axios";
+import { Context } from "../../context/Context";
 
 export default function AuthPage() {
     const [form, setForm] = useState({
         email: "",
         password: "",
     });
+
+    const { login } = useContext(Context);
 
     const changeHandler = (event) => {
         setForm({ ...form, [event.target.name]: event.target.value });
@@ -22,6 +25,22 @@ export default function AuthPage() {
                     { headers: { "Content-Type": "application/json" } }
                 )
                 .then((res) => console.log(res));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const loginHandler = async (req, res) => {
+        try {
+            await axios
+                .post(
+                    "/api/auth/login",
+                    { ...form },
+                    { headers: { "Content-Type": "application/json" } }
+                )
+                .then((response) => {
+					login(response.data.token, response.data.userId)
+				});
         } catch (error) {
             console.log(error);
         }
@@ -63,7 +82,10 @@ export default function AuthPage() {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <button className="wawes-effect wawes-light btn teal darken-2">
+                                        <button
+                                            className="wawes-effect wawes-light btn teal darken-2"
+                                            onClick={loginHandler}
+                                        >
                                             Войти
                                         </button>
                                         <Link
