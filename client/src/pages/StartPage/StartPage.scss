@@ -1,0 +1,40 @@
+.todos {
+    margin-top: 50px;
+    overflow-y: auto;
+    height: 300px;
+    &-item {
+        display: flex;
+        padding: 1rem 1.5rem;
+        align-items: center;
+        cursor: pointer;
+        border-left: solid 2px teal;
+        position: relative;
+        &.completed {
+            &::after {
+                content: "";
+                position: absolute;
+                width: 850px;
+                left: 25px;
+                top: 50%;
+                height: 2px;
+                background: teal;
+            }
+        }
+        &.important {
+            font-weight: 700;
+            color: rgb(154, 154, 15);
+        }
+    }
+    &-buttons {
+        display: flex;
+        margin-left: auto;
+        i {
+            margin: 0 0.5rem;
+            z-index: 1;
+            &:hover {
+                transform: scale(1.25);
+                transition: all 0.25s linear;
+            }
+        }
+    }
+}

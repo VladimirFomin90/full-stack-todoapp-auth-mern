@@ -1,6 +1,12 @@
 import { useState, useContext } from "react";
 import "./AuthPage.scss";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import {
+    BrowserRouter,
+    Switch,
+    Route,
+    Link,
+    useHistory,
+} from "react-router-dom";
 import axios from "axios";
 import { Context } from "../../context/Context";
 
@@ -10,6 +16,8 @@ export default function AuthPage() {
         password: "",
     });
 
+    const history = useHistory();
+
     const { login } = useContext(Context);
 
     const changeHandler = (event) => {
@@ -18,13 +26,12 @@ export default function AuthPage() {
 
     const registrationHandler = async () => {
         try {
-            await axios
-                .post(
-                    "/api/auth/registration",
-                    { ...form },
-                    { headers: { "Content-Type": "application/json" } }
-                )
-                .then((res) => console.log(res));
+            await axios.post(
+                "/api/auth/registration",
+                { ...form },
+                { headers: { "Content-Type": "application/json" } }
+            );
+            history.push("/");
         } catch (error) {
             console.log(error);
         }
@@ -39,8 +46,8 @@ export default function AuthPage() {
                     { headers: { "Content-Type": "application/json" } }
                 )
                 .then((response) => {
-					login(response.data.token, response.data.userId)
-				});
+                    login(response.data.token, response.data.userId);
+                });
         } catch (error) {
             console.log(error);
         }

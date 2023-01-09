@@ -11,6 +11,7 @@ app.get("/", function(req, res) {
 app.use(express.json({ extended: true }));
 
 app.use("/api/auth", require("./routes/auth.route"));
+app.use("/api/todo", require("./routes/todo.route"));
 
 async function start() {
     try {
